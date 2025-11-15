@@ -1,9 +1,8 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DefaultNamespace
+namespace SlotSystem
 {
     public class Slot : MonoBehaviour
     {

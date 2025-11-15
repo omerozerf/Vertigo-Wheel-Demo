@@ -1,5 +1,5 @@
 using System;
-using DefaultNamespace;
+using SlotSystem;
 using UnityEngine;
 
 namespace WheelSystem

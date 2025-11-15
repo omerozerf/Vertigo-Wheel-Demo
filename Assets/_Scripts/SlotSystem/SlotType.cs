@@ -1,7 +1,8 @@
-namespace DefaultNamespace
+namespace SlotSystem
 {
     public enum SlotType
     {
+        None,
         Death,
         AviatorGlassesEaster,
         BaseballCapEaster,
@@ -30,7 +31,6 @@ namespace DefaultNamespace
         Tier3Sniper,
         ArmorPoints,
         KnifePoints,
-        PistolPointsAlt,
         PistolPoints,
         RiflePoints,
         ShotgunPoints,
