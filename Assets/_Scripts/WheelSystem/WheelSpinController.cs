@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace WheelSystem
 {
-    public class WheelController : MonoBehaviour
+    public class WheelSpinController : MonoBehaviour
     {
         [SerializeField] private Transform _spinTransform;
         [SerializeField] private float _spinTime;
