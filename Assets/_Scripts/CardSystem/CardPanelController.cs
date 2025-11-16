@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SlotSystem;
 using UnityEngine;
 using WheelSystem;
@@ -8,6 +9,9 @@ namespace CardSystem
     public class CardPanelController : MonoBehaviour
     {
         [SerializeField] private CardCreator _cardCreator;
+        
+        private List<Card> m_CardList = new List<Card>();
+        
         
         private void Awake()
         {
@@ -27,7 +31,17 @@ namespace CardSystem
         
         private void HandleSlotSelected(Slot slot)
         {
-            _cardCreator.CreateCard(slot);
+            foreach (var card in m_CardList)
+            {
+                var isSameSlotSO = card.GetSlotSO() == slot.GetSlotSO();
+                if (isSameSlotSO)
+                {
+                    card.SetCount(card.GetCount() + slot.GetCount());
+                    return;
+                }
+            }
+            var newCard = _cardCreator.CreateCard(slot);
+            m_CardList.Add(newCard);
         }
         
         

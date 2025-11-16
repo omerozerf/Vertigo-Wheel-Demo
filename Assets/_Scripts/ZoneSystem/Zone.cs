@@ -33,8 +33,8 @@ namespace ZoneSystem
         private void HandleZoneNumberUpdated(int zoneNumber)
         {
             var isSuperZone = zoneNumber % GameCommonVariableManager.GetSuperZoneInterval() == 0;
-            var isSafeZone  = zoneNumber == 1 || (zoneNumber % GameCommonVariableManager.GetSuperZoneInterval() == 0);
-
+            var isSafeZone  = zoneNumber == 1 || (zoneNumber % GameCommonVariableManager.GetSafeZoneInterval() == 0);
+            
             if (isSuperZone)
             {
                 m_ZoneType = ZoneType.Super;
