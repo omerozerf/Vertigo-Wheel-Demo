@@ -4,12 +4,20 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using SlotSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 using ZoneSystem;
 
 namespace WheelSystem
 {
+    [Serializable]
+    public class SliceEditorConfig
+    { 
+        public SlotSO[] _allowedSlots;
+    }
+    
     public class WheelSlotController : MonoBehaviour
     {
+        [SerializeField] private SliceEditorConfig[] _sliceEditorConfigs;
         [SerializeField] private float _slotCountAnimationDuration;
         [SerializeField] private Slot[] _slotArray;
         [SerializeField] private SlotSO[] _allSlotSOArray;
@@ -18,8 +26,17 @@ namespace WheelSystem
         [SerializeField] private SlotSO[] _epicSlotSOArray;
         [SerializeField] private SlotSO[] _legendarySlotSOArray;
         [SerializeField] private SlotSO[] _bombSlotSOArray;
-
-
+        
+        
+        private struct RewardWeights
+        {
+            public float common;
+            public float rare;
+            public float epic;
+            public float legendary;
+        }
+        
+        
         private void Awake()
         {
             ZonePanelController.OnZoneChanged += HandleOnZoneChanged;
@@ -38,6 +55,46 @@ namespace WheelSystem
             SetupSlots(fixZone);
         }
         
+        
+        private RewardWeights GetBaseWeightsForPower(int power)
+        {
+            var t = Mathf.Clamp01(power / 100f);
+
+            float commonWeight;
+            float rareWeight;
+            float epicWeight;
+            float legendaryWeight;
+
+            if (IsSuperZone(power))
+            {
+                commonWeight = 0f;
+                rareWeight = Mathf.Lerp(20f, 10f, t);
+                epicWeight = Mathf.Lerp(40f, 45f, t);
+                legendaryWeight = Mathf.Lerp(40f, 45f, t);
+            }
+            else if (IsSafeZone(power))
+            {
+                commonWeight = Mathf.Lerp(30f, 5f, t);
+                rareWeight = Mathf.Lerp(35f, 25f, t);
+                epicWeight = Mathf.Lerp(25f, 35f, t);
+                legendaryWeight = Mathf.Lerp(10f, 35f, t);
+            }
+            else
+            {
+                commonWeight = Mathf.Lerp(60f, 5f, t);
+                rareWeight = Mathf.Lerp(30f, 20f, t);
+                epicWeight = Mathf.Lerp(9f, 35f, t);
+                legendaryWeight = Mathf.Lerp(1f, 40f, t);
+            }
+
+            return new RewardWeights
+            {
+                common = commonWeight,
+                rare = rareWeight,
+                epic = epicWeight,
+                legendary = legendaryWeight
+            };
+        }
 
         private bool IsSafeZone(int zone)
         {
@@ -106,11 +163,11 @@ namespace WheelSystem
         {
             for (var i = 0; i < _slotArray.Length; i++)
             {
-                var rewardType = GetRandomNonBombRewardTypeForPower(power);
-                var slotSo = GetRandomSlotSOForRewardType(rewardType);
+                var rewardType = GetRandomNonBombRewardTypeForPowerAndSlice(power, i);
+                var slotSo = GetRandomSlotSOForRewardTypeAndSlice(rewardType, i);
                 if (slotSo == null)
                 {
-                    Debug.LogWarning($"No SlotSO found for reward type {rewardType}.", this);
+                    Debug.LogWarning($"No SlotSO found for reward type {rewardType} on slice {i}.", this);
                     continue;
                 }
 
@@ -121,48 +178,98 @@ namespace WheelSystem
 
         private SlotRewardType GetRandomNonBombRewardTypeForPower(int power)
         {
-            var t = Mathf.Clamp01(power / 100f);
+            var w = GetBaseWeightsForPower(power);
 
-            float commonWeight;
-            float rareWeight;
-            float epicWeight;
-            float legendaryWeight;
-
-            if (IsSuperZone(power))
-            {
-                // Super zone: mostly Epic/Legendary
-                commonWeight = 0f;
-                rareWeight = Mathf.Lerp(20f, 10f, t);
-                epicWeight = Mathf.Lerp(40f, 45f, t);
-                legendaryWeight = Mathf.Lerp(40f, 45f, t);
-            }
-            else if (IsSafeZone(power))
-            {
-                // Safe zone: significantly increased high–value rewards
-                commonWeight = Mathf.Lerp(30f, 5f, t);
-                rareWeight = Mathf.Lerp(35f, 25f, t);
-                epicWeight = Mathf.Lerp(25f, 35f, t);
-                legendaryWeight = Mathf.Lerp(10f, 35f, t);
-            }
-            else
-            {
-                // Normal zone: baseline distribution
-                commonWeight = Mathf.Lerp(60f, 5f, t);
-                rareWeight = Mathf.Lerp(30f, 20f, t);
-                epicWeight = Mathf.Lerp(9f, 35f, t);
-                legendaryWeight = Mathf.Lerp(1f, 40f, t);
-            }
-
-            var total = commonWeight + rareWeight + epicWeight + legendaryWeight;
+            var total = w.common + w.rare + w.epic + w.legendary;
             var weightedRandom = UnityEngine.Random.Range(0f, total);
 
-            if (weightedRandom < commonWeight) return SlotRewardType.RewardCommon;
-            weightedRandom -= commonWeight;
+            if (weightedRandom < w.common) return SlotRewardType.RewardCommon;
+            weightedRandom -= w.common;
 
-            if (weightedRandom < rareWeight) return SlotRewardType.RewardRare;
-            weightedRandom -= rareWeight;
+            if (weightedRandom < w.rare) return SlotRewardType.RewardRare;
+            weightedRandom -= w.rare;
 
-            if (weightedRandom < epicWeight) return SlotRewardType.RewardEpic;
+            if (weightedRandom < w.epic) return SlotRewardType.RewardEpic;
+
+            return SlotRewardType.RewardLegendary;
+        }
+        
+        private SlotSO GetRandomSlotSOForRewardTypeAndSlice(SlotRewardType type, int sliceIndex)
+        {
+            // Önce bu slice'ın AllowedSlots'unda bu type'a uyan SlotSO var mı bak
+            if (_sliceEditorConfigs != null &&
+                sliceIndex >= 0 &&
+                sliceIndex < _sliceEditorConfigs.Length)
+            {
+                var cfg = _sliceEditorConfigs[sliceIndex];
+                if (cfg != null && cfg._allowedSlots != null && cfg._allowedSlots.Length > 0)
+                {
+                    List<SlotSO> candidates = null;
+
+                    foreach (var so in cfg._allowedSlots)
+                    {
+                        if (so == null) continue;
+                        if (so.GetRewardType() != type) continue;
+
+                        (candidates ??= new List<SlotSO>()).Add(so);
+                    }
+
+                    if (candidates != null && candidates.Count > 0)
+                    {
+                        var arr = candidates.ToArray();
+                        return GetRandomSlotSOFromArray(arr);
+                    }
+                }
+            }
+
+            // Bu slice için bu type'tan SlotSO yoksa global listeden çek
+            return GetRandomSlotSOForRewardType(type);
+        }
+        
+        private bool SliceAllowsRewardType(int sliceIndex, SlotRewardType type)
+        {
+            if (_sliceEditorConfigs == null || sliceIndex < 0 || sliceIndex >= _sliceEditorConfigs.Length)
+                return true; // constraint yok -> hepsi serbest
+
+            var cfg = _sliceEditorConfigs[sliceIndex];
+            if (cfg == null || cfg._allowedSlots == null || cfg._allowedSlots.Length == 0)
+                return true; // bu slice için AllowedSlots tanımlı değil -> hepsi serbest
+
+            foreach (var so in cfg._allowedSlots)
+            {
+                if (so == null) continue;
+                if (so.GetRewardType() == type)
+                    return true;
+            }
+
+            return false;
+        }
+
+        private SlotRewardType GetRandomNonBombRewardTypeForPowerAndSlice(int power, int sliceIndex)
+        {
+            var w = GetBaseWeightsForPower(power);
+
+            // Bu slice'ta olmayan type'ların ağırlığını 0 yap
+            if (!SliceAllowsRewardType(sliceIndex, SlotRewardType.RewardCommon))    w.common = 0f;
+            if (!SliceAllowsRewardType(sliceIndex, SlotRewardType.RewardRare))      w.rare = 0f;
+            if (!SliceAllowsRewardType(sliceIndex, SlotRewardType.RewardEpic))      w.epic = 0f;
+            if (!SliceAllowsRewardType(sliceIndex, SlotRewardType.RewardLegendary)) w.legendary = 0f;
+
+            var total = w.common + w.rare + w.epic + w.legendary;
+
+            // Eğer hepsi 0 ise -> bu slice için constraint yokmuş gibi davran
+            if (total <= 0.0001f)
+                return GetRandomNonBombRewardTypeForPower(power);
+
+            var weightedRandom = UnityEngine.Random.Range(0f, total);
+
+            if (weightedRandom < w.common) return SlotRewardType.RewardCommon;
+            weightedRandom -= w.common;
+
+            if (weightedRandom < w.rare) return SlotRewardType.RewardRare;
+            weightedRandom -= w.rare;
+
+            if (weightedRandom < w.epic) return SlotRewardType.RewardEpic;
 
             return SlotRewardType.RewardLegendary;
         }
