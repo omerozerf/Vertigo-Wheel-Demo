@@ -5,7 +5,6 @@ namespace ZoneInfoSystem
     public class SafeZoneInfo : ZoneInfo
     {
         [SerializeField] private int _firstSafeZoneNumber;
-        [SerializeField] private int _safeZoneNumberInterval;
         
         private int m_CurrentSafeZoneNumber;
         
@@ -23,13 +22,13 @@ namespace ZoneInfoSystem
             
             if (obj == _firstSafeZoneNumber)
             {
-                SetZoneNumber(_safeZoneNumberInterval);
-                m_CurrentSafeZoneNumber = _safeZoneNumberInterval;
+                SetZoneNumber(GameCommonVariableManager.GetSafeZoneInterval());
+                m_CurrentSafeZoneNumber = GameCommonVariableManager.GetSafeZoneInterval();
             }
-            else if (obj % _safeZoneNumberInterval == 0)
+            else if (obj % GameCommonVariableManager.GetSafeZoneInterval() == 0)
             {
-                SetZoneNumber(m_CurrentSafeZoneNumber + _safeZoneNumberInterval);
-                m_CurrentSafeZoneNumber += _safeZoneNumberInterval;
+                SetZoneNumber(m_CurrentSafeZoneNumber + GameCommonVariableManager.GetSafeZoneInterval());
+                m_CurrentSafeZoneNumber += GameCommonVariableManager.GetSafeZoneInterval();
             }
         }
     }

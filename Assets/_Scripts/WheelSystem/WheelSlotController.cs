@@ -1,6 +1,8 @@
 using System;
+using DG.Tweening;
 using SlotSystem;
 using UnityEngine;
+using ZoneSystem;
 
 namespace WheelSystem
 {
@@ -15,9 +17,15 @@ namespace WheelSystem
         [SerializeField] private SlotSO[] _bombSlotSOArray;
 
 
-        private void Start()
+        private void Awake()
         {
-            SetupSlots(2000);
+            ZonePanelController.OnZoneChanged += HandleOnZoneChanged;
+        }
+
+        private void HandleOnZoneChanged(int zoneNumber)
+        {
+            var fixZone = zoneNumber + 1; // Fix zone number to be 1-based
+            SetupSlots(fixZone);
         }
 
         private void OnValidate()
@@ -25,25 +33,40 @@ namespace WheelSystem
             ValidateSlotComponents();
             CategorizeSlotRewards();
         }
-        
-        
-        public void SetupSlots(int zone)
+
+        private bool IsSafeZone(int zone)
+        {
+            if (GameCommonVariableManager.GetSafeZoneInterval() <= 0) return false;
+            return zone == 1 || zone % GameCommonVariableManager.GetSafeZoneInterval() == 0;
+        }
+
+        private bool IsSuperZone(int zone)
+        {
+            if (GameCommonVariableManager.GetSuperZoneInterval() <= 0) return false;
+            return zone != 1 && zone % GameCommonVariableManager.GetSuperZoneInterval() == 0;
+        }
+
+
+        private void SetupSlots(int zone)
         {
             if (_slotArray == null || _slotArray.Length == 0)
             {
                 Debug.LogWarning("SetupSlots called but _slotArray is empty.", this);
                 return;
             }
-
+            
+            
             // Fill all slots with non-bomb rewards based on power
             SetupSlotWithReward(zone);
 
-            // Guarantee exactly one bomb slot
-            AssignRandomBombSlot();
+            AssignRandomBombSlot(zone);
         }
 
-        private void AssignRandomBombSlot()
+        private void AssignRandomBombSlot(int zone)
         {
+            if (zone == 1 || zone % GameCommonVariableManager.GetSafeZoneInterval() == 0 ||
+                zone % GameCommonVariableManager.GetSuperZoneInterval() == 0) return;
+            
             if (_bombSlotSOArray != null && _bombSlotSOArray.Length > 0)
             {
                 var bombIndex = UnityEngine.Random.Range(0, _slotArray.Length);
@@ -80,20 +103,43 @@ namespace WheelSystem
         {
             var t = Mathf.Clamp01(power / 100f);
 
-            var commonWeight = Mathf.Lerp(60f, 5f, t);
-            var rareWeight = Mathf.Lerp(30f, 20f, t);
-            var epicWeight = Mathf.Lerp(9f, 35f, t);
-            var legendaryWeight = Mathf.Lerp(1f, 40f, t);
+            float commonWeight;
+            float rareWeight;
+            float epicWeight;
+            float legendaryWeight;
+
+            if (IsSuperZone(power))
+            {
+                // Super zone: mostly Epic/Legendary
+                commonWeight = 0f;
+                rareWeight = Mathf.Lerp(20f, 10f, t);
+                epicWeight = Mathf.Lerp(40f, 45f, t);
+                legendaryWeight = Mathf.Lerp(40f, 45f, t);
+            }
+            else if (IsSafeZone(power))
+            {
+                // Safe zone: significantly increased high–value rewards
+                commonWeight = Mathf.Lerp(30f, 5f, t);
+                rareWeight = Mathf.Lerp(35f, 25f, t);
+                epicWeight = Mathf.Lerp(25f, 35f, t);
+                legendaryWeight = Mathf.Lerp(10f, 35f, t);
+            }
+            else
+            {
+                // Normal zone: baseline distribution
+                commonWeight = Mathf.Lerp(60f, 5f, t);
+                rareWeight = Mathf.Lerp(30f, 20f, t);
+                epicWeight = Mathf.Lerp(9f, 35f, t);
+                legendaryWeight = Mathf.Lerp(1f, 40f, t);
+            }
 
             var total = commonWeight + rareWeight + epicWeight + legendaryWeight;
             var weightedRandom = UnityEngine.Random.Range(0f, total);
 
             if (weightedRandom < commonWeight) return SlotRewardType.RewardCommon;
-            
             weightedRandom -= commonWeight;
 
             if (weightedRandom < rareWeight) return SlotRewardType.RewardRare;
-            
             weightedRandom -= rareWeight;
 
             if (weightedRandom < epicWeight) return SlotRewardType.RewardEpic;
@@ -129,21 +175,43 @@ namespace WheelSystem
             var minCount = 1;
             var maxCount = Mathf.RoundToInt(Mathf.Lerp(2f, 10f, t));
 
+            var isSafe = IsSafeZone(power);
+            var isSuper = IsSuperZone(power);
+
             switch (type)
             {
                 case SlotRewardType.RewardCommon:
+                    // Common can still appear in decent amounts, but we don't buff it in safe/super.
                     maxCount += 1;
                     break;
 
                 case SlotRewardType.RewardRare:
+                    if (isSafe) maxCount += 1;
+                    if (isSuper)
+                    {
+                        minCount = 2;
+                        maxCount += 2;
+                    }
                     break;
 
                 case SlotRewardType.RewardEpic:
                     maxCount = Mathf.Max(minCount, maxCount - 1);
+                    if (isSafe) maxCount += 1;
+                    if (isSuper)
+                    {
+                        minCount = 2;
+                        maxCount += 2;
+                    }
                     break;
 
                 case SlotRewardType.RewardLegendary:
                     maxCount = Mathf.Max(2, maxCount - 2);
+                    if (isSafe) maxCount += 1;
+                    if (isSuper)
+                    {
+                        minCount = 2;
+                        maxCount += 2;
+                    }
                     break;
 
                 case SlotRewardType.Bomb:

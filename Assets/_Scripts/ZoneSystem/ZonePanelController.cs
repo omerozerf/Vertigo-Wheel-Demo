@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using WheelSystem;
 
 namespace ZoneSystem
 {
@@ -21,6 +22,11 @@ namespace ZoneSystem
         private int m_LastZoneNumber;
 
 
+        private void Awake()
+        {
+            WheelSpinController.OnWheelStopped += HandleOnWheelStopped;
+        }
+        
         private void Start()
         {
             for (var index = 0; index < _zoneCount; index++)
@@ -35,16 +41,25 @@ namespace ZoneSystem
             m_LastZoneNumber = _zoneCount;
             
             OnZoneChanged?.Invoke(m_CurrentZoneNumber);
-            
-            InvokeRepeating(nameof(NextZone), 1f, 1f);
         }
 
+        private void OnDestroy()
+        {
+            WheelSpinController.OnWheelStopped -= HandleOnWheelStopped;
+        }
+        
         private void OnValidate()
         {
             if (!_zoneCreator)
             {
                 _zoneCreator = GetComponentInChildren<ZoneCreator>();
             }
+        }
+        
+        
+        private void HandleOnWheelStopped(int obj)
+        {
+            NextZone();
         }
         
         
