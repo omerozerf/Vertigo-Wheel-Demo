@@ -12,6 +12,9 @@ namespace ZoneSystem
         [SerializeField] private Transform _zoneParentTransform;
         [SerializeField] private float _leftRecycleX;
 
+        public static event Action<int> OnZoneChanged;
+        public static event Action<int> OnLastZoneChanged;
+
         private readonly List<Zone> m_ZoneList = new List<Zone>();
         
         private int m_CurrentZoneNumber;
@@ -30,6 +33,10 @@ namespace ZoneSystem
 
             m_CurrentZoneNumber = 0;
             m_LastZoneNumber = _zoneCount;
+            
+            OnZoneChanged?.Invoke(m_CurrentZoneNumber);
+            
+            InvokeRepeating(nameof(NextZone), 1f, 1f);
         }
 
         private void OnValidate()
@@ -73,6 +80,10 @@ namespace ZoneSystem
                 var newAnchoredPosition = new Vector2(anchoredPosition.x - _zoneSpacing, anchoredPosition.y);
                 zone.SetPosition(newAnchoredPosition);
             }
+
+            m_CurrentZoneNumber++;
+            OnZoneChanged?.Invoke(m_CurrentZoneNumber);
+            OnLastZoneChanged?.Invoke(m_LastZoneNumber);
         }
 
         
