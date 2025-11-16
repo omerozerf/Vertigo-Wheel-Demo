@@ -1,3 +1,4 @@
+using System;
 using SlotSystem;
 using UnityEngine;
 
@@ -6,7 +7,9 @@ namespace WheelSystem
     public class WheelSlotSelector : MonoBehaviour
     {
         [SerializeField] private Slot[] _slotArray;
-
+        
+        public static event Action<Slot> OnSlotSelected;
+        
 
         private void Awake()
         {
@@ -33,7 +36,7 @@ namespace WheelSystem
             }
 
             var selectedSlot = _slotArray[slotIndex];
-            Debug.Log(selectedSlot.GetSlotSO() + " " + selectedSlot.GetCount());
+            OnSlotSelected?.Invoke(selectedSlot);
         }
         
         private void ValidateSlotComponents()
