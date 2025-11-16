@@ -19,14 +19,10 @@ namespace WheelSystem
     {
         [Header("Slot Editor")]
         [SerializeField] private SliceEditorConfig[] _sliceEditorConfigs;
-        
         [Space]
-        
         [Header("Slot Animation")]
         [SerializeField] private float _slotCountAnimationDuration;
-        
         [Space]
-        
         [Header("Slot Components")]
         [SerializeField] private Slot[] _slotArray;
         [SerializeField] private SlotSO[] _allSlotSOArray;

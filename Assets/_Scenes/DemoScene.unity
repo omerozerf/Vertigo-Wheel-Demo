@@ -1167,6 +1167,7 @@ GameObject:
   - component: {fileID: 724767657}
   - component: {fileID: 724767658}
   - component: {fileID: 724767659}
+  - component: {fileID: 724767660}
   m_Layer: 5
   m_Name: ui_parent_transform_wheel
   m_TagString: Untagged
@@ -1394,6 +1395,26 @@ MonoBehaviour:
   - {fileID: 1455714452}
   - {fileID: 229542199}
   - {fileID: 312547201}
+--- !u!114 &724767660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724767652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06607d5730944afdaf0d31345ddd7836, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wheelBgImage: {fileID: 569489399}
+  _wheelIndicatorImage: {fileID: 981488069}
+  _normalWheelBgSprite: {fileID: 21300000, guid: cf4954b0978574dc8bac83257ffa33f2, type: 3}
+  _safeWheelBgSprite: {fileID: 21300000, guid: a3e848dc9981b44be948e099d81edb1f, type: 3}
+  _superWheelBgSprite: {fileID: 21300000, guid: 312c01d270c68497f9055b150a67b4b7, type: 3}
+  _normalWheelIndicatorSprite: {fileID: 21300000, guid: 00c37ced6f9f8421cb532c10f0bb1a4c, type: 3}
+  _safeWheelIndicatorSprite: {fileID: 21300000, guid: 03792d5e4e0704dedb5cbda0aaa4cdf1, type: 3}
+  _superWheelIndicatorSprite: {fileID: 21300000, guid: 4701c424af82d43b9a966e2d153427b9, type: 3}
 --- !u!1 &822030287
 GameObject:
   m_ObjectHideFlags: 0
