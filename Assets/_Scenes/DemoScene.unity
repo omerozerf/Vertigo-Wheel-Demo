@@ -2387,8 +2387,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spinTransform: {fileID: 724767653}
-  _spinTime: 3
-  _fixSpinTime: 0.5
+  _spinTime: 4
+  _fixSpinTime: 1
   _minFullTurns: 2
   _maxFullTurns: 3
 --- !u!114 &724767658
