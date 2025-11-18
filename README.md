@@ -1,3 +1,10 @@
+## 🧾 Account Information (Company Games)
+
+| Game           | Username  | User ID          |
+|----------------|-----------|------------------|
+| Critical Strike | omerozerf | CD4E2D1A0B6A200  |
+| Polygun Arena   | omerozerf | B34B2DB5BF7167AB |
+
 # Wheel Rewards Progression Game
 
 Spin tabanlı, zone ilerlemeye dayalı bir Unity oyunu.  
@@ -19,7 +26,7 @@ Oyun; Wheel sistemi, Zone progression, Slot/Reward üretimi, Card envanteri ve a
 | ![](./MyRecordings/GameplayGIF.gif) | **Gameplay GIF** — Oran: 16:9 |
 
 **Gameplay Video:**  
-Vertigo-Wheel-Demo/MyRecordings/GameplayVideo.mp4
+[Google Drive Video Linki](https://drive.google.com/file/d/1WlAMrHjYNcj1LMWZfsJxsEpaWDi5QpxJ/view?usp=sharing)
 
 ---
 
