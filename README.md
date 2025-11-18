@@ -16,7 +16,7 @@ Oyun; Wheel sistemi, Zone progression, Slot/Reward üretimi, Card envanteri ve a
 
 | Görsel | Açıklama |
 |-------|----------|
-| ![](Vertigo-Wheel-Demo/MyRecordings/GameplayGIF.gif) | **Gameplay GIF** — Oran: 16:9 |
+| ![](./MyRecordings/GameplayGIF.gif) | **Gameplay GIF** — Oran: 16:9 |
 
 **Gameplay Video:**  
 Vertigo-Wheel-Demo/MyRecordings/GameplayVideo.mp4
@@ -29,7 +29,7 @@ Vertigo-Wheel-Demo/MyRecordings/GameplayVideo.mp4
 
 | 16:9 | 20:9 | 4:3 |
 |------|------|-----|
-| ![](Vertigo-Wheel-Demo/MyRecordings/InGameScreen16-9.png) <br> Oran: 16:9 | ![](Vertigo-Wheel-Demo/MyRecordings/InGameScreen20-9.png) <br> Oran: 20:9 | ![](Vertigo-Wheel-Demo/MyRecordings/InGameScreen4-3.png) <br> Oran: 4:3 |
+| ![](./MyRecordings/InGameScreen16-9.png) <br> Oran: 16:9 | ![](./MyRecordings/InGameScreen20-9.png) <br> Oran: 20:9 | ![](./MyRecordings/InGameScreen4-3.png) <br> Oran: 4:3 |
 
 ---
 
@@ -37,7 +37,7 @@ Vertigo-Wheel-Demo/MyRecordings/GameplayVideo.mp4
 
 | 16:9 | 20:9 | 4:3 |
 |------|------|-----|
-| ![](Vertigo-Wheel-Demo/MyRecordings/RewardsScreen16-9.png) <br> Oran: 16:9 | ![](Vertigo-Wheel-Demo/MyRecordings/RewardsScreen20-9.png) <br> Oran: 20:9 | ![](Vertigo-Wheel-Demo/MyRecordings/RewardsScreen4-3.png) <br> Oran: 4:3 |
+| ![](./MyRecordings/RewardsScreen16-9.png) <br> Oran: 16:9 | ![](./MyRecordings/RewardsScreen20-9.png) <br> Oran: 20:9 | ![](./MyRecordings/RewardsScreen4-3.png) <br> Oran: 4:3 |
 
 ---
 
@@ -45,7 +45,7 @@ Vertigo-Wheel-Demo/MyRecordings/GameplayVideo.mp4
 
 | 16:9 | 20:9 | 4:3 |
 |------|------|-----|
-| ![](Vertigo-Wheel-Demo/MyRecordings/BombScreen16-9.png) <br> Oran: 16:9 | ![](Vertigo-Wheel-Demo/MyRecordings/BombScreen20-9.png) <br> Oran: 20:9 | ![](Vertigo-Wheel-Demo/MyRecordings/BombScreen4-3.png) <br> Oran: 4:3 |
+| ![](./MyRecordings/BombScreen16-9.png) <br> Oran: 16:9 | ![](./MyRecordings/BombScreen20-9.png) <br> Oran: 20:9 | ![](./MyRecordings/BombScreen4-3.png) <br> Oran: 4:3 |
 
 ---
 
@@ -53,7 +53,7 @@ Vertigo-Wheel-Demo/MyRecordings/GameplayVideo.mp4
 
 | 16:9 | 20:9 | 4:3 |
 |------|------|-----|
-| ![](Vertigo-Wheel-Demo/MyRecordings/ExitScreen16-9.png) <br> Oran: 16:9 | ![](Vertigo-Wheel-Demo/MyRecordings/ExitScreen20-9.png) <br> Oran: 20:9 | ![](Vertigo-Wheel-Demo/MyRecordings/ExitScreen4-3.png) <br> Oran: 4:3 |
+| ![](./MyRecordings/ExitScreen16-9.png) <br> Oran: 16:9 | ![](./MyRecordings/ExitScreen20-9.png) <br> Oran: 20:9 | ![](./MyRecordings/ExitScreen4-3.png) <br> Oran: 4:3 |
 
 ---
 
