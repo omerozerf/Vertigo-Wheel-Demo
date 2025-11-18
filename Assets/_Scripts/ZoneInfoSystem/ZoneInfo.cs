@@ -16,7 +16,7 @@ namespace ZoneInfoSystem
         
         private void OnDestroy()
         {
-            ZonePanelController.OnZoneChanged += HandleZoneChanged;
+            ZonePanelController.OnZoneChanged -= HandleZoneChanged;
         }
         
         

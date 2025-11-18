@@ -23,25 +23,12 @@ namespace ScreenSystem
             WheelSlotSelector.OnBombSelected -= HandleBombSelected;
         }
         
-        private void OnValidate()
-        {
-            InitializeCanvasGroup();
-        }
-        
 
         private void HandleBombSelected()
         {
             Show();
         }
         
-        
-        private void InitializeCanvasGroup()
-        {
-            if (!_canvasGroup)
-            {
-                _canvasGroup = GetComponent<CanvasGroup>();
-            }
-        }
         
         private void ShowRedGlow()
         {
