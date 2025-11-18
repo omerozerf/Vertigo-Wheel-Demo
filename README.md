@@ -5,6 +5,8 @@
 | Critical Strike | omerozerf  | CD4E2D1A0B6A200  |
 | Polygun Arena   | omerozerf  | B34B2DB5BF7167AB |
 
+---
+
 # Wheel Rewards Progression Game
 
 A Unity game based on spinning mechanics and zone progression.  
@@ -19,14 +21,16 @@ Core systems include Wheel mechanics, Zone progression, Slot/Reward generation, 
 
 ---
 
+## 🎥 Gameplay Videos & Screenshots:  
+👉 **https://drive.google.com/drive/folders/1vAjKEF8tkwy2UwZllpBJsYHQo_hDQJl1?usp=sharing**
+
+---
+
 ## 🎮 Gameplay Preview
 
 | Image | Description |
 |-------|-------------|
 | ![](./MyRecordings/GameplayGIF.gif) | Gameplay GIF — Aspect Ratio: 16:9 |
-
-**Gameplay Videos & Screenshots:**  
-https://drive.google.com/drive/folders/1vAjKEF8tkwy2UwZllpBJsYHQo_hDQJl1?usp=sharing
 
 ---
 
