@@ -71,14 +71,14 @@ namespace ScreenSystem
         public override void Show()
         {
             _canvasGroup.blocksRaycasts = true;
-            _canvasGroup.DOFade(1f, 0.5f).SetEase(Ease.InOutSine);
+            _canvasGroup.DOFade(1f, _fadeInDuration).SetEase(Ease.InOutSine);
             ShowRedGlow();
         }
 
         public override void Hide()
         {
             _canvasGroup.blocksRaycasts = false;
-            _canvasGroup.DOFade(0f, 0.5f).SetEase(Ease.InOutSine);
+            _canvasGroup.DOFade(0f, _fadeInDuration).SetEase(Ease.InOutSine);
             StopRedGlow();
         }
     }

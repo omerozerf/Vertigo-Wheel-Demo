@@ -5,6 +5,7 @@ namespace ScreenSystem
 {
     public abstract class ScreenController : MonoBehaviour
     {
+        [SerializeField] protected float _fadeInDuration = 0.5f;
         [SerializeField] protected CanvasGroup _canvasGroup;
 
 
