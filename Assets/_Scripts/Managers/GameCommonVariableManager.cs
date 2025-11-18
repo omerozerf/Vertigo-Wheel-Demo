@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Managers
@@ -6,6 +7,8 @@ namespace Managers
     {
         [SerializeField] private int _safeZoneInterval;
         [SerializeField] private int _superZoneInterval;
+        [SerializeField] private float _wheelScale;
+        [SerializeField] private Transform _wheelTransform;
     
         private static GameCommonVariableManager ms_Instance;
 
@@ -13,6 +16,17 @@ namespace Managers
         private void Awake()
         {
             ms_Instance = this;
+        }
+        
+        private void OnValidate()
+        {
+            SetWheelTransformScale();
+        }
+        
+        
+        private void SetWheelTransformScale()
+        {
+            if (_wheelTransform) _wheelTransform.localScale = Vector3.one * _wheelScale;
         }
 
 
