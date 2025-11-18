@@ -40,19 +40,19 @@ namespace ObjectPoolSystem
             {
                 if (config.ObjectPoolType == ObjectPoolType.None)
                 {
-                    Debug.LogWarning("[ObjectPooler] Boş key tanımlanmış, atlanıyor.", this);
+                    Debug.LogWarning("[ObjectPooler] None key.", this);
                     continue;
                 }
 
                 if (config.Prefab == null)
                 {
-                    Debug.LogWarning($"[ObjectPooler] '{config.ObjectPoolType}' için prefab atanmamış, atlanıyor.", this);
+                    Debug.LogWarning($"[ObjectPooler] '{config.ObjectPoolType}' Needs prefab.", this);
                     continue;
                 }
 
                 if (m_PoolMap.ContainsKey(config.ObjectPoolType))
                 {
-                    Debug.LogWarning($"[ObjectPooler] Aynı key iki kere tanımlanmış: {config.ObjectPoolType}", this);
+                    Debug.LogWarning($"[ObjectPooler] Same 2 key: {config.ObjectPoolType}", this);
                     continue;
                 }
 
@@ -75,7 +75,7 @@ namespace ObjectPoolSystem
         {
             if (!m_PrefabMap.TryGetValue(key, out var prefab) || prefab == null)
             {
-                Debug.LogError($"[ObjectPooler] '{key}' için prefab bulunamadı.", this);
+                Debug.LogError($"[ObjectPooler] '{key}' there is no prefab.", this);
                 return null;
             }
 
@@ -100,13 +100,12 @@ namespace ObjectPoolSystem
         {
             if (!m_PoolMap.TryGetValue(key, out var queue))
             {
-                Debug.LogError($"[ObjectPooler] '{key}' için havuz bulunamadı.", this);
+                Debug.LogError($"[ObjectPooler] '{key}' there is no pool.", this);
                 return null;
             }
 
             if (queue.Count == 0)
             {
-                // Havuz boşsa genişlet
                 var newInstance = CreateNewInstance(key);
                 return newInstance;
             }
@@ -121,7 +120,7 @@ namespace ObjectPoolSystem
 
             if (!m_PoolMap.TryGetValue(key, out var queue))
             {
-                Debug.LogError($"[ObjectPooler] '{key}' için havuz yok, obje Destroy ediliyor.", this);
+                Debug.LogError($"[ObjectPooler] '{key}' , there is no pool. Object was destroyed.", this);
                 Destroy(instance);
                 return;
             }
