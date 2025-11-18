@@ -19,16 +19,22 @@ namespace ScreenSystem
             WheelSlotSelector.OnBombSelected += HandleBombSelected;
         }
 
-        private void HandleBombSelected()
+        private void OnDestroy()
         {
-            Show();
+            WheelSlotSelector.OnBombSelected -= HandleBombSelected;
         }
-
+        
         private void OnValidate()
         {
             InitializeCanvasGroup();
         }
+        
 
+        private void HandleBombSelected()
+        {
+            Show();
+        }
+        
         
         private void InitializeCanvasGroup()
         {

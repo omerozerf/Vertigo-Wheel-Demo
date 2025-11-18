@@ -18,8 +18,8 @@ namespace CardSystem
             rt.localScale = Vector3.one;
             
             card.SetSlotSO(slot.GetSlotSO());
-            card.SetCount(slot.GetCount());
             card.SetImage(slot.GetSlotSO().GetIcon());
+            card.SetCount(0);
             
             return card;
         }

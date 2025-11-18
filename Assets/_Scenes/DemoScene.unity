@@ -518,7 +518,7 @@ RectTransform:
   m_Children:
   - {fileID: 1847736682}
   m_Father: {fileID: 1789503732}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2128,7 +2128,6 @@ GameObject:
   m_Component:
   - component: {fileID: 708456711}
   - component: {fileID: 708456712}
-  - component: {fileID: 708456713}
   m_Layer: 0
   m_Name: Fps_Manager
   m_TagString: Untagged
@@ -2164,22 +2163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetFps: 120
---- !u!114 &708456713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708456710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbd6744eaf6d48c1aa49929113abedca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pools:
-  - _objectPoolType: 1
-    _prefab: {fileID: 1204146661679139361, guid: c7aaee3acc53544d0ba15f47545ce38b, type: 3}
-    _initialSize: 10
 --- !u!1 &724767652
 GameObject:
   m_ObjectHideFlags: 0
@@ -2449,12 +2432,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032544774e9445a1a802d048195dc196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectPoolManager: {fileID: 708456713}
+  _objectPoolManager: {fileID: 1230357150}
   _objectPoolType: 1
-  _spawnRoot: {fileID: 1423061550}
-  _target: {fileID: 0}
   _effectParent: {fileID: 854147091}
-  _defaultSpawnCount: 5
   _scatterRadius: 40
   _scatterDuration: 0.2
   _moveDuration: 0.4
@@ -2819,7 +2799,7 @@ RectTransform:
   - {fileID: 1745770518}
   - {fileID: 981488068}
   m_Father: {fileID: 1789503732}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4581,6 +4561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardCreator: {fileID: 1352099635}
+  _wheelSlotEffectController: {fileID: 724767661}
 --- !u!114 &1352099635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5819,8 +5800,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 854147091}
   - {fileID: 77000566}
+  - {fileID: 854147091}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

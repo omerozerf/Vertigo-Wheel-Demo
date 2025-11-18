@@ -8,6 +8,7 @@ namespace SlotSystem
     {
         [SerializeField] private Image _iconImage;
         [SerializeField] private TMP_Text _countText;
+        [SerializeField] private RectTransform _iconRectTransform;
 
         private SlotSO m_SlotSO;
         private int m_Count;
@@ -55,6 +56,11 @@ namespace SlotSystem
         public int GetCount()
         {
             return m_Count;
+        }
+        
+        public RectTransform GetIconRectTransform()
+        {
+            return _iconRectTransform;
         }
     }
 }
