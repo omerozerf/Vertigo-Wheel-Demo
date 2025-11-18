@@ -5,32 +5,45 @@ namespace ZoneInfoSystem
 {
     public class SafeZoneInfo : ZoneInfo
     {
-        [SerializeField] private int _firstSafeZoneNumber;
-        
         private int m_CurrentSafeZoneNumber;
-        
-        
+
         private void Start()
         {
-            SetZoneNumber(_firstSafeZoneNumber);
-            m_CurrentSafeZoneNumber = _firstSafeZoneNumber;
+            m_CurrentSafeZoneNumber = GameCommonVariableManager.GetFirstSafeZoneNumber();
+            SetZoneNumber(m_CurrentSafeZoneNumber);
         }
 
-
-        protected override void HandleZoneChanged(int obj)
+        protected override void HandleZoneChanged(int zoneNumber)
         {
-            if (obj <= 0) return;
+            if (zoneNumber <= 0) return;
+
+            var safeInterval = GameCommonVariableManager.GetSafeZoneInterval();
+            var superInterval = GameCommonVariableManager.GetSuperZoneInterval();
+
+            if (zoneNumber == GameCommonVariableManager.GetFirstSafeZoneNumber())
+            {
+                m_CurrentSafeZoneNumber = GameCommonVariableManager.GetFirstSafeZoneNumber();
+                SetZoneNumber(safeInterval);
+                return;
+            }
+
             
-            if (obj == _firstSafeZoneNumber)
+            switch (zoneNumber % safeInterval)
             {
-                SetZoneNumber(GameCommonVariableManager.GetSafeZoneInterval());
-                m_CurrentSafeZoneNumber = GameCommonVariableManager.GetSafeZoneInterval();
+                case 0 when (zoneNumber + safeInterval) % superInterval != 0:
+                {
+                    m_CurrentSafeZoneNumber = zoneNumber;
+                    SetZoneNumber(m_CurrentSafeZoneNumber + safeInterval);
+                    break;
+                }
+                case 0 when (zoneNumber + safeInterval) % superInterval == 0: // Super Zone skipped
+                {
+                    m_CurrentSafeZoneNumber = zoneNumber + safeInterval;
+                    SetZoneNumber(m_CurrentSafeZoneNumber + safeInterval);
+                    break;
+                }
             }
-            else if (obj % GameCommonVariableManager.GetSafeZoneInterval() == 0)
-            {
-                SetZoneNumber(m_CurrentSafeZoneNumber + GameCommonVariableManager.GetSafeZoneInterval());
-                m_CurrentSafeZoneNumber += GameCommonVariableManager.GetSafeZoneInterval();
-            }
+            
         }
     }
 }

@@ -5,7 +5,9 @@ namespace Managers
 {
     public class GameCommonVariableManager : MonoBehaviour
     {
+        [SerializeField] private int _firstSafeZoneNumber;
         [SerializeField] private int _safeZoneInterval;
+        [SerializeField] private int _firstSuperZoneNumber;
         [SerializeField] private int _superZoneInterval;
         [SerializeField] private float _wheelScale;
         [SerializeField] private Transform _wheelTransform;
@@ -38,6 +40,16 @@ namespace Managers
         public static int GetSuperZoneInterval()
         {
             return ms_Instance._superZoneInterval;
+        }
+
+        public static int GetFirstSafeZoneNumber()
+        {
+            return ms_Instance._firstSafeZoneNumber;
+        }
+        
+        public static int GetFirstSuperZoneNumber()
+        {
+            return ms_Instance._firstSuperZoneNumber;
         }
     }
 }

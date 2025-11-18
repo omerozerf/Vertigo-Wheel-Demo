@@ -5,28 +5,35 @@ namespace ZoneInfoSystem
 {
     public class SuperZoneInfo : ZoneInfo
     {
-        [SerializeField] private int _firstSuperZoneNumber;
-        
-        private int m_CurrentSafeZoneNumber;
-        
+        private int m_CurrentSuperZoneNumber;
         
         private void Start()
         {
-            SetZoneNumber(_firstSuperZoneNumber);
+            // İlk super zone’u ayarla (örneğin: 30)
+            m_CurrentSuperZoneNumber = GameCommonVariableManager.GetFirstSuperZoneNumber();
+            SetZoneNumber(m_CurrentSuperZoneNumber);
         }
 
-
-        protected override void HandleZoneChanged(int obj)
+        protected override void HandleZoneChanged(int zoneNumber)
         {
-            if (obj == _firstSuperZoneNumber)
+            if (zoneNumber <= 0) return;
+
+            var superInterval = GameCommonVariableManager.GetSuperZoneInterval();
+
+            if (zoneNumber < GameCommonVariableManager.GetFirstSuperZoneNumber())
+                return;
+
+            if (zoneNumber == GameCommonVariableManager.GetFirstSuperZoneNumber())
             {
-                SetZoneNumber(GameCommonVariableManager.GetSuperZoneInterval());
-                m_CurrentSafeZoneNumber = GameCommonVariableManager.GetSuperZoneInterval();
+                m_CurrentSuperZoneNumber = GameCommonVariableManager.GetFirstSuperZoneNumber();
+                SetZoneNumber(m_CurrentSuperZoneNumber + superInterval);
+                return;
             }
-            else if (obj % GameCommonVariableManager.GetSuperZoneInterval() == 0)
+
+            if (zoneNumber % superInterval == 0)
             {
-                SetZoneNumber(m_CurrentSafeZoneNumber + GameCommonVariableManager.GetSuperZoneInterval());
-                m_CurrentSafeZoneNumber += GameCommonVariableManager.GetSuperZoneInterval();
+                m_CurrentSuperZoneNumber = zoneNumber;
+                SetZoneNumber(m_CurrentSuperZoneNumber + superInterval);
             }
         }
     }

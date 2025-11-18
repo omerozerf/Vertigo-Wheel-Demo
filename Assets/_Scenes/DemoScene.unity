@@ -1457,7 +1457,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _zoneNumberText: {fileID: 1212173255}
-  _firstSuperZoneNumber: 30
 --- !u!1 &471450482
 GameObject:
   m_ObjectHideFlags: 0
@@ -4713,7 +4712,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _zoneNumberText: {fileID: 986261203}
-  _firstSafeZoneNumber: 1
 --- !u!1001 &1187512244
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7668,7 +7666,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f0bf52d90b406194e96763ef1a9dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _firstSafeZoneNumber: 1
   _safeZoneInterval: 5
+  _firstSuperZoneNumber: 30
   _superZoneInterval: 30
   _wheelScale: 1.5
   _wheelTransform: {fileID: 854147091}
