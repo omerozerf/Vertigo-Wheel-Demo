@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ObjectPoolSystem
 {
@@ -61,7 +60,7 @@ namespace ObjectPoolSystem
                 m_PoolMap.Add(config.ObjectPoolType, queue);
                 m_PrefabMap.Add(config.ObjectPoolType, config.Prefab);
 
-                for (int i = 0; i < config.InitialSize; i++)
+                for (var i = 0; i < config.InitialSize; i++)
                 {
                     var instance = CreateNewInstance(config.ObjectPoolType);
                     if (instance != null)

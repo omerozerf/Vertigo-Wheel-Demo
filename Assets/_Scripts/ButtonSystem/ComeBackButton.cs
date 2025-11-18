@@ -1,4 +1,3 @@
-using System;
 using ScreenSystem;
 using UnityEngine;
 using UnityEngine.UI;

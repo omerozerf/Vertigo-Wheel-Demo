@@ -5,7 +5,6 @@ using DG.Tweening;
 using Managers;
 using SlotSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
 using ZoneSystem;
 
 namespace WheelSystem

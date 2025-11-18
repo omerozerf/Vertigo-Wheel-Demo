@@ -1,11 +1,8 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using ScreenSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using WheelSystem;
-using ZoneSystem;
 
 namespace ButtonSystem
 {

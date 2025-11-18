@@ -1,8 +1,6 @@
-using System;
 using Managers;
 using UnityEngine;
 using UnityEngine.UI;
-using WheelSystem;
 
 namespace ZoneSystem
 {

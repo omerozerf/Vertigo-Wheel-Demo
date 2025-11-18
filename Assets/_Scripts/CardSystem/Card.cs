@@ -1,4 +1,3 @@
-using System;
 using SlotSystem;
 using TMPro;
 using UnityEngine;

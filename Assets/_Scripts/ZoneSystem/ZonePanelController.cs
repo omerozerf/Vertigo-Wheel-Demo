@@ -16,7 +16,7 @@ namespace ZoneSystem
         public static event Action<int> OnZoneChanged;
         public static event Action<int> OnLastZoneChanged;
 
-        private readonly List<Zone> m_ZoneList = new List<Zone>();
+        private readonly List<Zone> m_ZoneList = new();
         
         private int m_CurrentZoneNumber;
         private int m_LastZoneNumber;

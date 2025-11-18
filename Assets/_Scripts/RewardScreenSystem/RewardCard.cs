@@ -41,8 +41,8 @@ namespace RewardScreenSystem
                 .SetEase(Ease.Linear)
                 .SetLoops(-1, LoopType.Restart);
 
-            Color startColor = Color.white;
-            Color midColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+            var startColor = Color.white;
+            var midColor = new Color(0.5f, 0.5f, 0.5f, 1f);
 
             _cardShineEffectImage.color = startColor;
 

@@ -1,10 +1,8 @@
-using System;
 using ButtonSystem;
 using CardSystem;
 using DG.Tweening;
 using ScreenSystem;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace RewardScreenSystem
 {
