@@ -36,7 +36,8 @@ namespace RewardScreenSystem
             for (var index = 0; index < list.Count; index++)
             {
                 var card = list[index];
-                _rewardCardCreator.CreateRewardCard(card);
+                var rewardCard = _rewardCardCreator.CreateRewardCard(card);
+                rewardCard.ShineEffect();
             }
         }
         
